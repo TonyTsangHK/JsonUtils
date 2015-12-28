@@ -1,0 +1,25 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+version = '1.0.1'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+libsDirName = 'libs'
+
+dependencies {
+    compile project(':JSON')
+    compile project(':ByteUtils')
+    compile project(':Utilities')
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+    }
+}

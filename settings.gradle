@@ -1,0 +1,10 @@
+rootProject.name = 'JsonUtil'
+
+include 'Utilities'
+project(':Utilities').projectDir = new File('../Utilities')
+
+include 'ByteUtils'
+project(':ByteUtils').projectDir = new File('../ByteUtils')
+
+include 'JSON'
+project(':JSON').projectDir = new File('../JSON')

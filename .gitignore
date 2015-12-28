@@ -1,0 +1,9 @@
+/bin
+/build
+/nbproject
+/nbproject/private/
+/dist/
+/out
+/.idea
+/*.iml
+/.gradle
