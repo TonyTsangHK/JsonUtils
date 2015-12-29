@@ -1,4 +1,4 @@
-rootProject.name = 'JsonUtil'
+rootProject.name = 'JsonUtils'
 
 include 'Utilities'
 project(':Utilities').projectDir = new File('../Utilities')
