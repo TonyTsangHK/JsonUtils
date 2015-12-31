@@ -3,6 +3,7 @@ package utils.json.parser;
 import org.json.*;
 import utils.string.StringUtil;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -186,6 +187,9 @@ public class JsonFormatter {
         if (value instanceof Collection) {
             return format((Collection<? extends Object>)value, indentFactor, indent);
         }
+        if (value.getClass().isArray()) {
+            return formatGenericArray(value, indentFactor, indent);
+        }
         return quote(value.toString());
     }
 
@@ -230,6 +234,9 @@ public class JsonFormatter {
         }
         if (value instanceof Collection) {
             return format((Collection<? extends Object>)value, indentFactor, indent);
+        }
+        if (value.getClass().isArray()) {
+            return formatGenericArray(value, indentFactor, indent);
         }
         return quote(value.toString());
     }
@@ -466,6 +473,50 @@ public class JsonFormatter {
 
         builder.append(']');
         return builder.toString();
+    }
+
+    private String formatGenericArray(Object arr, int indentFactor, int indent) {
+        if (arr == null) {
+            return "null";
+        } else {
+            int len = Array.getLength(arr);
+            if (len == 0) {
+                return "[]";
+            } else {
+                StringBuilder builder = new StringBuilder("[");
+
+                int newindent = indent + indentFactor;
+                builder.append('\n');
+                for (int i = 0; i < len; i++) {
+                    Object v = Array.get(arr, i);
+                    boolean newLined = i == 0;
+                    if (i > 0) {
+                        builder.append(",");
+
+                        if (v instanceof JSONObject || v instanceof JSONArray) {
+                            builder.append('\n');
+                            newLined = true;
+                        }
+                    }
+
+                    if (newLined) {
+                        for (int j = 0; j < newindent; j += 1) {
+                            builder.append(' ');
+                        }
+                    }
+
+                    builder.append(valueToStringWithoutJson(v, indentFactor, newindent));
+                    i++;
+                }
+                builder.append('\n');
+                for (int i = 0; i < indent; i += 1) {
+                    builder.append(' ');
+                }
+
+                builder.append(']');
+                return builder.toString();
+            }
+        }
     }
 
     public String format(JSONArray jsonArray, int indentFactor) throws JSONException {
