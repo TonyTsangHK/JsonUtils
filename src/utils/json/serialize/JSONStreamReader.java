@@ -22,6 +22,8 @@ import utils.stream.SerializeUtils;
  *
  */
 public class JSONStreamReader {
+
+
     /**
      * Underlying input stream
      */
@@ -125,13 +127,13 @@ public class JSONStreamReader {
             case JsonConstants.TYPE_INT32:
                 return readInt(4);
             case JsonConstants.TYPE_N_INT8:
-                return new Integer(-(readInt(1).intValue()));
+                return -(readInt(1));
             case JsonConstants.TYPE_N_INT16:
-                return new Integer(-(readInt(2).intValue()));
+                return -(readInt(2));
             case JsonConstants.TYPE_N_INT24:
-                return new Integer(-(readInt(3).intValue()));
+                return -(readInt(3));
             case JsonConstants.TYPE_N_INT32:
-                return new Integer(-(readInt(4).intValue()));
+                return -(readInt(4));
             default:
                 throw new IOException(
                         "Type format error, expected int type was not found (" + Integer.toHexString(type) + ")!"
@@ -148,7 +150,7 @@ public class JSONStreamReader {
      * @throws IOException
      */
     public Object readIntOrLong(int byteCount) throws IOException {
-        return readIntOrLong(byteCount);
+        return readIntOrLong(in, byteCount);
     }
     
     /**
@@ -180,31 +182,31 @@ public class JSONStreamReader {
             case JsonConstants.TYPE_INT64:
                 return readLong(8);
             case JsonConstants.TYPE_N_INT8:
-                return new Integer(-(readInt(1).intValue()));
+                return -(readInt(1));
             case JsonConstants.TYPE_N_INT16:
-                return new Integer(-(readInt(2).intValue()));
+                return -(readInt(2));
             case JsonConstants.TYPE_N_INT24:
-                return new Integer(-(readInt(3).intValue()));
+                return -(readInt(3));
             case JsonConstants.TYPE_N_INT32:
                 Object obj = readIntOrLong(4);
                 if (obj instanceof Integer) {
-                    return new Integer(-((Integer) obj).intValue());
+                    return -(Integer) obj;
                 } else {
                     Long l = (Long)obj;
-                    if (-l.longValue() == Integer.MIN_VALUE) {
-                        return new Integer(Integer.MIN_VALUE);
+                    if (-l == Integer.MIN_VALUE) {
+                        return Integer.MIN_VALUE;
                     } else {
-                        return new Long(-l.longValue());
+                        return -l;
                     }
                 }
             case JsonConstants.TYPE_N_INT40:
-                return new Long(-(readLong(5).longValue()));
+                return -(readLong(5));
             case JsonConstants.TYPE_N_INT48:
-                return new Long(-(readLong(6).longValue()));
+                return -(readLong(6));
             case JsonConstants.TYPE_N_INT56:
-                return new Long(-(readLong(7).longValue()));
+                return -(readLong(7));
             case JsonConstants.TYPE_N_INT64:
-                return new Long(-(readLong(8).longValue()));
+                return -(readLong(8));
             default:
                 throw new IOException(
                         "Type format error, expected int/long type was not found (" + Integer.toHexString(type) + ")!"
@@ -380,11 +382,11 @@ public class JSONStreamReader {
     }
 
     public static Integer readInt(InputStream in, int byteCount) throws IOException {
-        return new Integer(SerializeUtils.byteArrayToInt(SerializeUtils.readStream(in, byteCount)));
+        return SerializeUtils.byteArrayToInt(SerializeUtils.readStream(in, byteCount));
     }
 
     public static Long readLong(InputStream in, int byteCount) throws IOException {
-        return new Long(SerializeUtils.byteArrayToLong(SerializeUtils.readStream(in, byteCount)));
+        return SerializeUtils.byteArrayToLong(SerializeUtils.readStream(in, byteCount));
     }
 
     public static BigInteger readBigInteger(InputStream in) throws IOException {
@@ -405,7 +407,7 @@ public class JSONStreamReader {
         int len = in.read();
 
         if (len == 255) {
-            len = readInt(in, 4).intValue();
+            len = readInt(in, 4);
         }
 
         return len;
@@ -415,25 +417,25 @@ public class JSONStreamReader {
         long v = SerializeUtils.byteArrayToLong(SerializeUtils.readStream(in, byteCount));
         if (v > 0) {
             if (v > Integer.MAX_VALUE) {
-                return new Long(v);
+                return v;
             } else {
-                return new Integer((int)v);
+                return (int) v;
             }
         } else {
             if (v < Integer.MIN_VALUE) {
-                return new Long(v);
+                return v;
             } else {
-                return new Integer((int)v);
+                return (int) v;
             }
         }
     }
 
     public static Float readFloat(InputStream in) throws IOException {
-        return new Float(SerializeUtils.byteArrayToFloat(SerializeUtils.readStream(in, 4)));
+        return SerializeUtils.byteArrayToFloat(SerializeUtils.readStream(in, 4));
     }
 
     public static Double readDouble(InputStream in) throws IOException {
-        return new Double(SerializeUtils.byteArrayToDouble(SerializeUtils.readStream(in, 8)));
+        return SerializeUtils.byteArrayToDouble(SerializeUtils.readStream(in, 8));
     }
 
     public static Date readDate(InputStream in) throws IOException {
@@ -479,7 +481,7 @@ public class JSONStreamReader {
     }
 
     public static List<Object> readList(InputStream in) throws IOException {
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
 
         int memberCount = readLength(in);
 
@@ -513,7 +515,7 @@ public class JSONStreamReader {
     }
 
     public static Map<String, Object> readMap(InputStream in) throws IOException {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
 
         int memberCount = readLength(in);
 
@@ -563,31 +565,31 @@ public class JSONStreamReader {
                 case JsonConstants.TYPE_INT64:
                     return readLong(in, 8);
                 case JsonConstants.TYPE_N_INT8:
-                    return new Integer(-(readInt(in, 1).intValue()));
+                    return -(readInt(in, 1));
                 case JsonConstants.TYPE_N_INT16:
-                    return new Integer(-(readInt(in, 2).intValue()));
+                    return -(readInt(in, 2));
                 case JsonConstants.TYPE_N_INT24:
-                    return new Integer(-(readInt(in, 3).intValue()));
+                    return -(readInt(in, 3));
                 case JsonConstants.TYPE_N_INT32:
                     Object obj = readIntOrLong(in, 4);
                     if (obj instanceof Integer) {
-                        return new Integer(-((Integer) obj).intValue());
+                        return -(Integer) obj;
                     } else {
                         Long l = (Long)obj;
-                        if (-l.longValue() == Integer.MIN_VALUE) {
-                            return new Integer(Integer.MIN_VALUE);
+                        if (-l == Integer.MIN_VALUE) {
+                            return Integer.MIN_VALUE;
                         } else {
-                            return new Long(-l.longValue());
+                            return -l;
                         }
                     }
                 case JsonConstants.TYPE_N_INT40:
-                    return new Long(-(readLong(in, 5).longValue()));
+                    return -(readLong(in, 5));
                 case JsonConstants.TYPE_N_INT48:
-                    return new Long(-(readLong(in, 6).longValue()));
+                    return -(readLong(in, 6));
                 case JsonConstants.TYPE_N_INT56:
-                    return new Long(-(readLong(in, 7).longValue()));
+                    return -(readLong(in, 7));
                 case JsonConstants.TYPE_N_INT64:
-                    return new Long(-(readLong(in, 8).longValue()));
+                    return -(readLong(in, 8));
                 case JsonConstants.TYPE_BIGINTEGER:
                     return readBigInteger(in);
                 case JsonConstants.TYPE_BIGDECIMAL:
@@ -595,11 +597,11 @@ public class JSONStreamReader {
                 case JsonConstants.TYPE_SINGLE:
                     return readFloat(in);
                 case JsonConstants.TYPE_SINGLE_ZERO:
-                    return new Float(0);
+                    return 0f;
                 case JsonConstants.TYPE_DOUBLE:
                     return readDouble(in);
                 case JsonConstants.TYPE_DOUBLE_ZERO:
-                    return new Double(0);
+                    return 0d;
                 case JsonConstants.TYPE_DATE:
                     return readDate(in);
                 case JsonConstants.TYPE_STRING:

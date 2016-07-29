@@ -128,10 +128,10 @@ public class JSONCompactStreamReader extends JSONStreamReader {
      * @return JSONInfoHolder
      */
     private void initialize(boolean skipTypeCheck) throws IOException {
-        stringList = new ArrayList<String>();
-        bigIntegerList = new ArrayList<BigInteger>();
-        bigDecimalList = new ArrayList<BigDecimal>();
-        dateList = new ArrayList<Date>();
+        stringList = new ArrayList<>();
+        bigIntegerList = new ArrayList<>();
+        bigDecimalList = new ArrayList<>();
+        dateList = new ArrayList<>();
         
         if (!skipTypeCheck && !typeCheck()) {
             return;
@@ -254,31 +254,31 @@ public class JSONCompactStreamReader extends JSONStreamReader {
                 case JsonConstants.TYPE_INT64:
                     return readLong(8);
                 case JsonConstants.TYPE_N_INT8:
-                    return new Integer(-(readInt(1).intValue()));
+                    return -(readInt(1));
                 case JsonConstants.TYPE_N_INT16:
-                    return new Integer(-(readInt(2).intValue()));
+                    return -(readInt(2));
                 case JsonConstants.TYPE_N_INT24:
-                    return new Integer(-(readInt(3).intValue()));
+                    return -(readInt(3));
                 case JsonConstants.TYPE_N_INT32:
                     Object obj = readIntOrLong(4);
                     if (obj instanceof Integer) {
-                        return new Integer(-((Integer) obj).intValue());
+                        return -(Integer) obj;
                     } else {
                         Long l = (Long)obj;
-                        if (-l.longValue() == Integer.MIN_VALUE) {
-                            return new Integer(Integer.MIN_VALUE);
+                        if (-l == Integer.MIN_VALUE) {
+                            return Integer.MIN_VALUE;
                         } else {
-                            return new Long(-l.longValue());
+                            return -l;
                         }
                     }
                 case JsonConstants.TYPE_N_INT40:
-                    return new Long(-(readLong(5).longValue()));
+                    return -(readLong(5));
                 case JsonConstants.TYPE_N_INT48:
-                    return new Long(-(readLong(6).longValue()));
+                    return -(readLong(6));
                 case JsonConstants.TYPE_N_INT56:
-                    return new Long(-(readLong(7).longValue()));
+                    return -(readLong(7));
                 case JsonConstants.TYPE_N_INT64:
-                    return new Long(-(readLong(8).longValue()));
+                    return -(readLong(8));
                 case JsonConstants.TYPE_BIGINTEGER:
                     return readBigInteger();
                 case JsonConstants.TYPE_BIGDECIMAL:
@@ -286,11 +286,11 @@ public class JSONCompactStreamReader extends JSONStreamReader {
                 case JsonConstants.TYPE_SINGLE:
                     return readFloat();
                 case JsonConstants.TYPE_SINGLE_ZERO:
-                    return new Float(0);
+                    return 0f;
                 case JsonConstants.TYPE_DOUBLE:
                     return readDouble();
                 case JsonConstants.TYPE_DOUBLE_ZERO:
-                    return new Double(0);
+                    return 0d;
                 case JsonConstants.TYPE_DATE:
                     return readDate();
                 case JsonConstants.TYPE_STRING:

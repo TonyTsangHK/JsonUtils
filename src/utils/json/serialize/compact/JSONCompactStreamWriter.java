@@ -225,7 +225,7 @@ public class JSONCompactStreamWriter extends JSONStreamWriter {
             writeToStream(JsonConstants.TYPE_NULL);
         } else if (o instanceof Boolean) {
             Boolean b = (Boolean) o;
-            if (b.booleanValue()) {
+            if (b) {
                 writeToStream(JsonConstants.TYPE_BOOLEAN_TRUE);
             } else {
                 writeToStream(JsonConstants.TYPE_BOOLEAN_FALSE);
@@ -244,6 +244,10 @@ public class JSONCompactStreamWriter extends JSONStreamWriter {
             writeMap((Map<String, ?>)o);
         } else if (o instanceof List) {
             writeList((List<?>) o);
+        } else {
+            throw new UnsupportedOperationException(
+                "Unsupported data type detected: " + o.getClass().getName() + ", toString: " + String.valueOf(o)
+            );
         }
     }
     
@@ -263,7 +267,7 @@ public class JSONCompactStreamWriter extends JSONStreamWriter {
             writeToStream(JsonConstants.TYPE_NULL);
         } else if (o instanceof Boolean) {
             Boolean b = (Boolean) o;
-            if (b.booleanValue()) {
+            if (b) {
                 writeToStream(JsonConstants.TYPE_BOOLEAN_TRUE);
             } else {
                 writeToStream(JsonConstants.TYPE_BOOLEAN_FALSE);
@@ -286,6 +290,10 @@ public class JSONCompactStreamWriter extends JSONStreamWriter {
             writeMap((Map<String, ?>)o);
         } else if (o instanceof List) {
             writeList((List<?>) o);
+        } else {
+            throw new UnsupportedOperationException(
+                "Unsupported data type detected: " + o.getClass().getName() + ", toString: " + String.valueOf(o)
+            );
         }
     }
 }

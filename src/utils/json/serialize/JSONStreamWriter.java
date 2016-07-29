@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,7 +49,8 @@ public class JSONStreamWriter {
     public void writeInt(int v) throws IOException {
         byte[] bytes = SerializeUtils.intToByteArray(Math.abs(v));
 
-        int type = JsonConstants.TYPE_INT8;
+        int type;
+
         if (v > 0) {
             type = bytes.length + 4;
         } else {
@@ -92,7 +90,8 @@ public class JSONStreamWriter {
             bytes = nbytes;
         }
 
-        int type = JsonConstants.TYPE_INT8;
+        int type;
+
         if (v > 0) {
             type = bytes.length + 4;
         } else {
@@ -382,7 +381,7 @@ public class JSONStreamWriter {
             out.write(JsonConstants.TYPE_NULL);
         } else if (o instanceof Boolean) {
             Boolean b = (Boolean) o;
-            if (b.booleanValue()) {
+            if (b) {
                 out.write(JsonConstants.TYPE_BOOLEAN_TRUE);
             } else {
                 out.write(JsonConstants.TYPE_BOOLEAN_FALSE);
@@ -409,6 +408,10 @@ public class JSONStreamWriter {
             writeList((List<Object>) o);
         } else if (o instanceof byte[]) {
             writeBinary((byte[]) o);
+        } else {
+            throw new UnsupportedOperationException(
+                "Unsupported data type detected: " + o.getClass().getName() + ", toString: " + String.valueOf(o)
+            );
         }
     }
     
@@ -426,7 +429,7 @@ public class JSONStreamWriter {
             out.write(JsonConstants.TYPE_NULL);
         } else if (o instanceof Boolean) {
             Boolean b = (Boolean) o;
-            if (b.booleanValue()) {
+            if (b) {
                 out.write(JsonConstants.TYPE_BOOLEAN_TRUE);
             } else {
                 out.write(JsonConstants.TYPE_BOOLEAN_FALSE);
@@ -457,6 +460,10 @@ public class JSONStreamWriter {
             writeList((List<Object>) o);
         } else if (o instanceof byte[]) {
             writeBinary((byte[])o);
+        } else {
+            throw new UnsupportedOperationException(
+                "Unsupported data type detected: " + o.getClass().getName() + ", toString: " + String.valueOf(o)
+            );
         }
     }
     
@@ -486,7 +493,7 @@ public class JSONStreamWriter {
     
     /**
      * Set the underlying output stream
-     * @param out
+     * @param out output stream
      */
     public void setOutputStream(OutputStream out) {
         this.out = out;
