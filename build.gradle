@@ -10,7 +10,13 @@ tasks.withType(JavaCompile) {
 
 libsDirName = 'libs'
 
+repositories {
+    jcenter();
+}
+
 dependencies {
+    compile "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.3"
+
     compile project(':JSON')
     compile project(':ByteUtils')
     compile project(':Utilities')
