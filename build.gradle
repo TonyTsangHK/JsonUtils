@@ -1,6 +1,18 @@
 apply plugin: 'java'
 apply plugin: 'kotlin'
 
+buildscript {
+    ext.kotlin_version = "1.0.3"
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
 sourceCompatibility = 1.8
 
 version = '1.0.1'
@@ -16,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.3"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:kotlin_version"
 
     compile project(':JSON')
     compile project(':ByteUtils')
