@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'kotlin'
 
 buildscript {
-    ext.kotlin_version = "1.0.6"
+    ext.kotlin_version = "1.1.0"
 
     repositories {
         jcenter()
@@ -16,6 +16,10 @@ buildscript {
 sourceCompatibility = 1.8
 
 version = '1.0.1'
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
