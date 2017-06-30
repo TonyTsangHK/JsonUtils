@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -85,7 +86,7 @@ public class JSONCompactStreamReader extends JSONStreamReader {
      */
     @Override
     public Map<String, Object> readMap() throws IOException {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         
         int memberCount = readLength();
         
@@ -101,6 +102,57 @@ public class JSONCompactStreamReader extends JSONStreamReader {
         }
         
         return map;
+    }
+
+    /**
+     * Read a JSONArray
+     *
+     * @return JSONArray value
+     *
+     * @throws JSONException
+     * @throws IOException
+     */
+    public JSONArray readArray() throws JSONException, IOException {
+        int memberCount = readLength();
+        
+        if (memberCount == 0) {
+            return new JSONArray();
+        } else {
+            JSONArray array = new JSONArray();
+            
+            for (int i = 0; i < memberCount; i++) {
+                Object v = readValueFromStream(true);
+
+                array.put(v);
+            }
+
+            return array;
+        }
+    }
+    
+    /**
+     * Read a list
+     *
+     * @return List value
+     *
+     * @throws IOException
+     */
+    public List<Object> readList() throws IOException {
+        int memberCount = readLength();
+        
+        if (memberCount == 0) {
+            return new ArrayList<>();
+        } else {
+            List<Object> list = new ArrayList<>(memberCount);
+
+            for (int i = 0; i < memberCount; i++) {
+                Object v = readValueFromStream(false);
+                
+                list.add(v);
+            }
+            
+            return list;
+        }
     }
     
     /**
@@ -125,7 +177,6 @@ public class JSONCompactStreamReader extends JSONStreamReader {
     /**
      * Read the json intermediate datas holder
      * 
-     * @return JSONInfoHolder
      */
     private void initialize(boolean skipTypeCheck) throws IOException {
         stringList = new ArrayList<>();
