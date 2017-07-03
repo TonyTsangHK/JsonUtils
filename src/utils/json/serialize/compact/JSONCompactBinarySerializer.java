@@ -14,15 +14,16 @@ import utils.json.serialize.AbstractJSONSerializer;
 /**
  * Serialize JSON into compact binary format
  * 
- * This serializer is intended to reduce space used for repetitive datas (String/BigInteger/BigDecimal/Date),
- * if the data does not contains any repetitive datas,
+ * This serializer is intended to reduce space used for repetitive data (String/BigInteger/BigDecimal/Date),
+ * if the data does not contains any repetitive data,
  * the serialized data will always be greater than normal Binary JSON serializer.
  * 
  * Format:
  * - Document starts with BiJ/FMB (optional header bytes)
- * - Header array encodes all String/BigInteger/BigDecimal/Date datas for later reference
- *      [TYPE_REF][length 0~4] < length indicating how many data array encoded
- *          [type byte][encoded data length][encoded data without type byte] < repeat for String, BigInteger, BigDecimal & date datas
+ * - Header array encodes all String/BigInteger/BigDecimal/Date data for later reference
+ *   Format:
+ *      [TYPE_REF][length 0~4] < length indicating how many data array encoded (write directly with OutputStream.write(int))
+ *          [type byte][encoded data length][encoded data without type byte] < repeat for String, BigInteger, BigDecimal & date data
  * - Content encoding, same as normal binary JSON encoding except for String/BigInteger/BigDecimal/Date.
  * - String, BigInteger, BigDecimal & Date data encoded as TYPE_REF:
  *      [TYPE_REF][1~4 bytes integer]
@@ -143,12 +144,12 @@ public final class JSONCompactBinarySerializer extends AbstractJSONSerializer {
     }
 
     @Override
-    public void serialize(List<? extends Object> list, OutputStream out) throws IOException {
+    public void serialize(List<?> list, OutputStream out) throws IOException {
         serialize(list, out, true);
     }
     
     @Override
-    public void serialize(List<? extends Object> list, OutputStream out, boolean flushWhenFinished) throws IOException {
+    public void serialize(List<?> list, OutputStream out, boolean flushWhenFinished) throws IOException {
         setup(out, new JSONInfoHolder(list));
         
         writer.writeJSONInfoHolder();
@@ -161,12 +162,12 @@ public final class JSONCompactBinarySerializer extends AbstractJSONSerializer {
     }
 
     @Override
-    public void serialize(Map<String, ? extends Object> map, OutputStream out) throws IOException {
+    public void serialize(Map<String, ?> map, OutputStream out) throws IOException {
         serialize(map, out, true);
     }
 
     @Override
-    public void serialize(Map<String, ? extends Object> map, OutputStream out, boolean flushWhenFinished) throws IOException {
+    public void serialize(Map<String, ?> map, OutputStream out, boolean flushWhenFinished) throws IOException {
         setup(out, new JSONInfoHolder(map));
         
         writer.writeJSONInfoHolder();

@@ -49,23 +49,23 @@ public class JSONCompactStreamWriter extends JSONStreamWriter {
      * 
      */
     public void writeJSONInfoHolder() throws IOException {
-        int l = 0;
+        int infoTypeLength = 0;
         
         if (jsonInfoHolder.stringSize() > 0) {
-            l++;
+            infoTypeLength++;
         }
         if (jsonInfoHolder.bigIntegerSize() > 0) {
-            l++;
+            infoTypeLength++;
         }
         if (jsonInfoHolder.bigDecimalSize() > 0) {
-            l++;
+            infoTypeLength++;
         }
         if (jsonInfoHolder.dateSize() > 0) {
-            l++;
+            infoTypeLength++;
         }
         
         writeToStream(JsonConstants.TYPE_REF);
-        writeToStream(l);
+        writeToStream(infoTypeLength);
         
         if (jsonInfoHolder.stringSize() > 0) {
             writeToStream(JsonConstants.TYPE_STRING);
