@@ -5,9 +5,9 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import utils.json.core.JSONArray;
+import utils.json.core.JSONException;
+import utils.json.core.JSONObject;
 
 import utils.json.serialize.AbstractJSONDeserializer;
 import utils.json.serialize.JsonConstants;

@@ -1,8 +1,8 @@
 package utils.json.serialize;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import utils.json.core.JSONArray;
+import utils.json.core.JSONException;
+import utils.json.core.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

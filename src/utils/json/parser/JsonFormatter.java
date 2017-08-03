@@ -1,6 +1,6 @@
 package utils.json.parser;
 
-import org.json.*;
+import utils.json.core.*;
 import utils.string.StringUtil;
 
 import java.lang.reflect.Array;

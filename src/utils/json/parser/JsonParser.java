@@ -1,9 +1,9 @@
 package utils.json.parser;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
+import utils.json.core.JSONArray;
+import utils.json.core.JSONException;
+import utils.json.core.JSONObject;
+import utils.json.core.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
