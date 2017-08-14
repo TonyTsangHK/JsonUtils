@@ -1,15 +1,12 @@
-package utils.json.serialize.compact;
+package utils.json.serialize.compact
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException
+import java.io.OutputStream
 
-import utils.json.core.JSONArray;
-import utils.json.core.JSONException;
-import utils.json.core.JSONObject;
+import utils.json.core.JSONArray
+import utils.json.core.JSONObject
 
-import utils.json.serialize.AbstractJSONSerializer;
+import utils.json.serialize.AbstractJSONSerializer
 
 /**
  * Serialize JSON into compact binary format
@@ -77,105 +74,106 @@ import utils.json.serialize.AbstractJSONSerializer;
  * @author Tony Tsang
  *
  */
-public final class JSONCompactBinarySerializer extends AbstractJSONSerializer {
-    private static JSONCompactBinarySerializer instance = new JSONCompactBinarySerializer();
-
-    /**
-     * Get a singleton instance of JSONCompactBinarySerializer
-     * @return instance of JSONCompactBinarySerializer
-     */
-    public static JSONCompactBinarySerializer getInstance() {
-        return instance;
+class JSONCompactBinarySerializer private constructor() : AbstractJSONSerializer() {
+    companion object {
+        private val _instance = JSONCompactBinarySerializer()
+        
+        /**
+         * Get a singleton instance of JSONCompactBinarySerializer
+         * @return instance of JSONCompactBinarySerializer
+         */
+        @JvmStatic
+        fun getInstance(): JSONCompactBinarySerializer {
+            return _instance
+        }
     }
+    
+    private var writer: JSONCompactStreamWriter? = null
 
-    private JSONCompactStreamWriter writer;
-    
-    private JSONCompactBinarySerializer() {}
-    
     /**
      * Set up writer.
      * 
      * @param out underlying output stream
      * @param jsonInfoHolder JSON info holder, holding intermediate datas
      */
-    private void setup(OutputStream out, JSONInfoHolder jsonInfoHolder) {
+    private fun setup(output: OutputStream, jsonInfoHolder: JSONInfoHolder) {
         if (writer != null) {
-            writer.setOutputStream(out);
-            writer.setJsonInfoHolder(jsonInfoHolder);
+            writer!!.setOutputStream(output)
+            writer!!.setJsonInfoHolder(jsonInfoHolder)
         } else {
-            writer = new JSONCompactStreamWriter(out, jsonInfoHolder);
+            writer = JSONCompactStreamWriter(output, jsonInfoHolder)
         }
     }
 
-    @Override
-    public void serialize(JSONObject json, OutputStream out) throws IOException, JSONException {
-        serialize(json, out, true);
+    @Throws(IOException::class)
+    override fun serialize(json: JSONObject, output: OutputStream) {
+        serialize(json, output, true)
     }
 
-    @Override
-    public void serialize(JSONObject json, OutputStream out, boolean flushWhenFinished) throws IOException, JSONException {
-        setup(out, new JSONInfoHolder(json));
+    @Throws(IOException::class)
+    override fun serialize(json: JSONObject, output: OutputStream, flushWhenFinished: Boolean) {
+        setup(output, JSONInfoHolder(json))
         
-        writer.writeJSONInfoHolder();
+        writer!!.writeJSONInfoHolder()
         
-        writer.writeJSONObject(json);
+        writer!!.writeJSONObject(json)
 
         if (flushWhenFinished) {
-            writer.flush();
+            writer!!.flush()
         }
     }
 
-    @Override
-    public void serialize(JSONArray jsonArray, OutputStream out) throws IOException, JSONException {
-        serialize(jsonArray, out, true);
+    @Throws(IOException::class)
+    override fun serialize(jsonArray: JSONArray, output: OutputStream) {
+        serialize(jsonArray, output, true)
     }
-    
-    @Override
-    public void serialize(JSONArray jsonArray, OutputStream out, boolean flushWhenFinished) throws IOException, JSONException {
-        setup(out, new JSONInfoHolder(jsonArray));
+
+    @Throws(IOException::class)
+    override fun serialize(jsonArray: JSONArray, output: OutputStream, flushWhenFinished: Boolean) {
+        setup(output, JSONInfoHolder(jsonArray))
         
-        writer.writeJSONInfoHolder();
+        writer!!.writeJSONInfoHolder()
         
-        writer.writeJSONArray(jsonArray);
+        writer!!.writeJSONArray(jsonArray)
 
         if (flushWhenFinished) {
-            writer.flush();
+            writer!!.flush()
         }
     }
 
-    @Override
-    public void serialize(List<?> list, OutputStream out) throws IOException {
-        serialize(list, out, true);
+    @Throws(IOException::class)
+    override fun serialize(list: List<Any?>, output: OutputStream) {
+        serialize(list, output, true)
     }
-    
-    @Override
-    public void serialize(List<?> list, OutputStream out, boolean flushWhenFinished) throws IOException {
-        setup(out, new JSONInfoHolder(list));
+
+    @Throws(IOException::class)
+    override fun serialize(list: List<Any?>, output: OutputStream, flushWhenFinished: Boolean) {
+        setup(output, JSONInfoHolder(list))
         
-        writer.writeJSONInfoHolder();
+        writer!!.writeJSONInfoHolder()
         
-        writer.writeList(list);
+        writer!!.writeList(list)
 
         if (flushWhenFinished) {
-            writer.flush();
+            writer!!.flush()
         }
     }
 
-    @Override
-    public void serialize(Map<String, ?> map, OutputStream out) throws IOException {
-        serialize(map, out, true);
+    @Throws(IOException::class)
+    override fun serialize(map: Map<String, Any?>, output: OutputStream) {
+        serialize(map, output, true)
     }
 
-    @Override
-    public void serialize(Map<String, ?> map, OutputStream out, boolean flushWhenFinished) throws IOException {
-        setup(out, new JSONInfoHolder(map));
+    @Throws(IOException::class)
+    override fun serialize(map: Map<String, Any?>, output: OutputStream, flushWhenFinished: Boolean) {
+        setup(output, JSONInfoHolder(map))
         
-        writer.writeJSONInfoHolder();
+        writer!!.writeJSONInfoHolder()
         
-        writer.writeMap(map);
+        writer!!.writeMap(map)
 
         if (flushWhenFinished) {
-            writer.flush();
+            writer!!.flush()
         }
     }
 }

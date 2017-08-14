@@ -1,13 +1,10 @@
-package utils.json.serialize;
+package utils.json.serialize
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException
+import java.io.OutputStream
 
-import utils.json.core.JSONArray;
-import utils.json.core.JSONException;
-import utils.json.core.JSONObject;
+import utils.json.core.JSONArray
+import utils.json.core.JSONObject
 
 /**
  * JSONSerializer interface.
@@ -16,7 +13,7 @@ import utils.json.core.JSONObject;
  * 
  * @author Tony Tsang
  */
-public interface JSONSerializer {
+interface JSONSerializer {
     /**
      * Serialize a JSONObject to the specified output stream
      * 
@@ -24,9 +21,9 @@ public interface JSONSerializer {
      * @param out output stream
      * 
      * @throws IOException
-     * @throws JSONException
      */
-    void serialize(JSONObject json, OutputStream out) throws IOException, JSONException;
+    @Throws(IOException::class)
+    fun serialize(json: JSONObject, output: OutputStream)
 
     /**
      * Serialize a JSONObject to the specified output stream
@@ -36,9 +33,9 @@ public interface JSONSerializer {
      * @param flushWhenFinished whether to flush when finished
      *
      * @throws IOException
-     * @throws JSONException
      */
-    void serialize(JSONObject json, OutputStream out, boolean flushWhenFinished) throws IOException, JSONException;
+    @Throws(IOException::class)
+    fun serialize(json: JSONObject, output: OutputStream, flushWhenFinished: Boolean)
     
     /**
      * Serialize a JSONArray to the specified output stream
@@ -47,9 +44,9 @@ public interface JSONSerializer {
      * @param out output stream
      * 
      * @throws IOException
-     * @throws JSONException
      */
-    void serialize(JSONArray jsonArray, OutputStream out) throws IOException, JSONException;
+    @Throws(IOException::class)
+    fun serialize(jsonArray: JSONArray, output: OutputStream)
 
     /**
      * Serialize a JSONArray to the specified output stream
@@ -59,9 +56,9 @@ public interface JSONSerializer {
      * @param flushWhenFinised whether to flush when finished
      *
      * @throws IOException
-     * @throws JSONException
      */
-    void serialize(JSONArray jsonArray, OutputStream out, boolean flushWhenFinised) throws IOException, JSONException;
+    @Throws(IOException::class)
+    fun serialize(jsonArray: JSONArray, output: OutputStream, flushWhenFinished: Boolean)
     
     /**
      * Serialize a list, formated as JSONArray, to the specified output stream
@@ -71,7 +68,8 @@ public interface JSONSerializer {
      * 
      * @throws IOException
      */
-    void serialize(List<? extends Object> list, OutputStream out) throws IOException;
+    @Throws(IOException::class)
+    fun serialize(list: List<Any?>, output: OutputStream)
 
     /**
      * Serialize a list, formated as JSONArray, to the specified output stream
@@ -82,7 +80,8 @@ public interface JSONSerializer {
      *
      * @throws IOException
      */
-    void serialize(List<? extends Object> list, OutputStream out, boolean flushWhenFinished) throws IOException;
+    @Throws(IOException::class)
+    fun serialize(list: List<Any?>, output: OutputStream, flushWhenFinished: Boolean)
     
     /**
      * Serialize a map, formatted as JSONObject, to the specified output stream
@@ -92,7 +91,8 @@ public interface JSONSerializer {
      *
      * @throws IOException
      */
-    void serialize(Map<String, ? extends Object> map, OutputStream out) throws IOException;
+    @Throws(IOException::class)
+    fun serialize(map: Map<String, Any?>, output: OutputStream)
 
     /**
      * Serialize a map, formatted as JSONObject, to the specified output stream
@@ -103,7 +103,8 @@ public interface JSONSerializer {
      *
      * @throws IOException
      */
-    void serialize(Map<String, ? extends Object> map, OutputStream out, boolean flushWhenFinished) throws IOException;
+    @Throws(IOException::class)
+    fun serialize(map: Map<String, Any?>, output: OutputStream, flushWhenFinished: Boolean)
 
     /**
      * Serialize a JSONObject to bytes.
@@ -111,10 +112,10 @@ public interface JSONSerializer {
      * @param json target json object
      * @return encoded bytes
      *
-     * @throws JSONException
      * @throws IOException
      */
-    byte[] serializeToBytes(JSONObject json) throws JSONException, IOException;
+    @Throws(IOException::class)
+    fun serializeToBytes(json: JSONObject): ByteArray
 
     /**
      * Serialize a JSONArray to bytes.
@@ -122,10 +123,10 @@ public interface JSONSerializer {
      * @param jsonArray target json array
      * @return encoded bytes
      *
-     * @throws JSONException
      * @throws IOException
      */
-    byte[] serializeToBytes(JSONArray jsonArray) throws JSONException, IOException;
+    @Throws(IOException::class)
+    fun serializeToBytes(jsonArray: JSONArray): ByteArray
 
     /**
      * Serialize a map, formatted as JSONObject, to bytes.
@@ -135,7 +136,8 @@ public interface JSONSerializer {
      *
      * @throws IOException
      */
-    byte[] serializeToBytes(Map<String, ? extends Object> map) throws IOException;
+    @Throws(IOException::class)
+    fun serializeToBytes(map: Map<String, Any?>): ByteArray
 
     /**
      * Serialize a list, formated as JSONArray, to bytes.
@@ -145,5 +147,6 @@ public interface JSONSerializer {
      *
      * @throws IOException
      */
-    byte[] serializeToBytes(List<? extends Object> list) throws IOException;
+    @Throws(IOException::class)
+    fun serializeToBytes(list: List<Any?>): ByteArray
 }

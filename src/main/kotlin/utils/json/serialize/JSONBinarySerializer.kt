@@ -1,4 +1,4 @@
-package utils.json.serialize;
+package utils.json.serialize
 
 /**
  * JSON & binary interchange serializer
@@ -11,14 +11,11 @@ package utils.json.serialize;
  * Implementation details are defined below, actually I am not following the specification ... sorry
  */
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException
+import java.io.OutputStream
 
-import utils.json.core.JSONArray;
-import utils.json.core.JSONException;
-import utils.json.core.JSONObject;
+import utils.json.core.JSONArray
+import utils.json.core.JSONObject
 
 /**
  * Serialize JSON into binary format
@@ -67,88 +64,87 @@ import utils.json.core.JSONObject;
  *      - TYPE_BINARY         0x55   Binary data                       [id] [byte length 1-254] [binary byte data]
  *                                                                     [id] [255] [4 byte int data representing number bytes] [binary byte data]
  */
-public final class JSONBinarySerializer extends AbstractJSONSerializer {
-    private static JSONBinarySerializer instance = new JSONBinarySerializer();
-
-    /**
-     * Get a singleton instance of JSONBinarySerializer
-     * @return
-     */
-    public static JSONBinarySerializer getInstance() {
-        return instance;
+class JSONBinarySerializer private constructor() : AbstractJSONSerializer() {
+    companion object {
+        private val _instance = JSONBinarySerializer()
+        
+        /**
+         * Get a singleton instance of JSONBinarySerializer
+         * @return
+         */
+        @JvmStatic
+        fun getInstance(): JSONBinarySerializer {
+            return _instance
+        }
     }
 
     /**
      * JSON stream writer
      */
-    private JSONStreamWriter writer;
-    
-    /**
-     * Construct a JSON serializer
-     */
-    private JSONBinarySerializer() {}
-    
-    private void setupOutputStream(OutputStream out) throws IOException {
+    private var writer: JSONStreamWriter? = null
+
+    @Throws(IOException::class)
+    fun setupOutputStream(output: OutputStream) {
         if (writer != null) {
-            writer.setOutputStream(out);
+            writer!!.setOutputStream(output)
         } else {
-            writer = new JSONStreamWriter(out);
+            writer = JSONStreamWriter(output)
         }
     }
 
-    @Override
-    public void serialize(JSONObject json, OutputStream out) throws IOException, JSONException {
-        serialize(json, out, true);
+    @Throws(IOException::class)
+    override fun serialize(json: JSONObject, output: OutputStream) {
+        serialize(json, output, true)
     }
     
-    @Override
-    public void serialize(JSONObject json, OutputStream out, boolean flushWhenFinished) throws IOException, JSONException {
-        setupOutputStream(out);
-        writer.writeJSONObject(json);
+    @Throws(IOException::class)
+    override fun serialize(json: JSONObject, output: OutputStream, flushWhenFinished: Boolean) {
+        setupOutputStream(output)
+        writer!!.writeJSONObject(json)
         if (flushWhenFinished) {
-            writer.flush();
+            writer!!.flush()
         }
     }
 
-    @Override
-    public void serialize(Map<String, ? extends Object> map, OutputStream out) throws IOException {
-        serialize(map, out, true);
+    @Throws(IOException::class)
+    override fun serialize(map: Map<String, Any?>, output: OutputStream) {
+        serialize(map, output, true)
     }
 
-    @Override
-    public void serialize(Map<String, ? extends Object> map, OutputStream out, boolean flushWhenFinished) throws IOException {
-        setupOutputStream(out);
-        writer.writeMap(map);
+    @Throws(IOException::class)
+    override fun serialize(map: Map<String, Any?>, output: OutputStream, flushWhenFinished: Boolean) {
+        setupOutputStream(output)
+        writer!!.writeMap(map)
         if (flushWhenFinished) {
-            writer.flush();
+            writer!!.flush()
         }
     }
 
-    @Override
-    public void serialize(JSONArray jsonArray, OutputStream out) throws IOException, JSONException {
-        serialize(jsonArray, out, true);
+    @Throws(IOException::class)
+    override fun serialize(jsonArray: JSONArray, output: OutputStream) {
+        serialize(jsonArray, output, true)
     }
-    
-    @Override
-    public void serialize(JSONArray jsonArray, OutputStream out, boolean flushWhenFinished) throws IOException, JSONException {
-        setupOutputStream(out);
-        writer.writeJSONArray(jsonArray);
+
+    @Throws(IOException::class)
+    override fun serialize(jsonArray: JSONArray, output: OutputStream, flushWhenFinished: Boolean) {
+        setupOutputStream(output)
+        writer!!.writeJSONArray(jsonArray)
         if (flushWhenFinished) {
-            writer.flush();
+            writer!!.flush()
         }
     }
 
-    @Override
-    public void serialize(List<? extends Object> list, OutputStream out) throws IOException {
-        serialize(list, out, true);
+    @Throws(IOException::class)
+    override fun serialize(list: List<Any?>, output: OutputStream) {
+        serialize(list, output, true)
     }
-    
-    @Override
-    public void serialize(List<? extends Object> list, OutputStream out, boolean flushWhenFinished) throws IOException {
-        setupOutputStream(out);
-        writer.writeList(list);
+
+    @Throws(IOException::class)
+    override fun serialize(list: List<Any?>, output: OutputStream, flushWhenFinished: Boolean) {
+        setupOutputStream(output)
+        writer!!.writeList(list)
         if (flushWhenFinished) {
-            writer.flush();
+            writer!!.flush()
         }
     }
 }

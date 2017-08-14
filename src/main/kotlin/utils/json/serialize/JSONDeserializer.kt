@@ -1,13 +1,10 @@
-package utils.json.serialize;
+package utils.json.serialize
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException
+import java.io.InputStream
 
-import utils.json.core.JSONArray;
-import utils.json.core.JSONException;
-import utils.json.core.JSONObject;
+import utils.json.core.JSONArray
+import utils.json.core.JSONObject
 
 /**
  * JSON deserializer interface
@@ -16,7 +13,7 @@ import utils.json.core.JSONObject;
  * 
  * @author Tony Tsang
  */
-public interface JSONDeserializer {
+interface JSONDeserializer {
     /**
      * Deserialize JSONObject from the specified input stream<br>
      * 
@@ -25,9 +22,9 @@ public interface JSONDeserializer {
      * @return deserialized JSONObject, null with failed deserialization.
      * 
      * @throws IOException
-     * @throws JSONException
      */
-    public JSONObject deserialize(InputStream in) throws IOException, JSONException;
+    @Throws(IOException::class)
+    fun deserialize(input: InputStream): JSONObject?
     
     /**
      * Deserialize JSONArray from the specified input stream
@@ -36,9 +33,9 @@ public interface JSONDeserializer {
      * @return deserialized JSONArray, null with failed deserialization
      * 
      * @throws IOException
-     * @throws JSONException
      */
-    public JSONArray deserializeToJSONArray(InputStream in) throws IOException, JSONException;
+    @Throws(IOException::class)
+    fun deserializeToJSONArray(input: InputStream): JSONArray?
     
     /**
      * Deserialize list (same as JSONArray) from the specified input stream
@@ -48,9 +45,9 @@ public interface JSONDeserializer {
      * @return deserialized list, null with failed deserialization
      * 
      * @throws IOException
-     * @throws JSONException
      */
-    public List<Object> deserializeToList(InputStream in) throws IOException;
+    @Throws(IOException::class)
+    fun deserializeToList(input: InputStream): List<Any?>?
     
     /**
      * Deserialize map (same as JSONObject) from the specified input stream
@@ -60,10 +57,10 @@ public interface JSONDeserializer {
      * @return deserialized map, null with failed deserialization
      * 
      * @throws IOException
-     * @throws JSONException
      */
-    public Map<String, Object> deserializeToMap(InputStream in) throws IOException;
-
+    @Throws(IOException::class)
+    fun deserializeToMap(input: InputStream): Map<String, Any?>?
+    
     /**
      * Deserialize JSONObject from the specified bytes.
      *
@@ -71,9 +68,9 @@ public interface JSONDeserializer {
      * @return deserialized json object
      *
      * @throws IOException
-     * @throws JSONException
      */
-    public JSONObject deserialize(byte[] bytes) throws IOException, JSONException;
+    @Throws(IOException::class)
+    fun deserialize(bytes: ByteArray): JSONObject?
 
     /**
      * Deserialize JSONArray from the specified bytes.
@@ -82,9 +79,9 @@ public interface JSONDeserializer {
      * @return deserialized json array
      *
      * @throws IOException
-     * @throws JSONException
      */
-    public JSONArray deserializeToJSONArray(byte[] bytes) throws IOException, JSONException;
+    @Throws(IOException::class)
+    fun deserializeToJSONArray(bytes: ByteArray): JSONArray?
 
     /**
      * Deserialize a Map (same as JSONObject) from the specified bytes
@@ -93,9 +90,9 @@ public interface JSONDeserializer {
      * @return deserialized map
      *
      * @throws IOException
-     * @throws JSONException
      */
-    public Map<String, Object> deserializeToMap(byte[] bytes) throws IOException;
+    @Throws(IOException::class)
+    fun deserializeToMap(bytes: ByteArray): Map<String, Any?>?
 
     /**
      * Deserialize a list (same as JSONArray) from the specified bytes
@@ -104,7 +101,6 @@ public interface JSONDeserializer {
      * @return deserialized list
      *
      * @throws IOException
-     * @throws JSONException
      */
-    public List<Object> deserializeToList(byte[] bytes) throws IOException;
+    fun deserializeToList(bytes: ByteArray): List<Any?>?
 }
