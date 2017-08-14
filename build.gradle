@@ -16,10 +16,10 @@ dependencies {
 sourceSets {
     main {
         java {
-            srcDir 'src'
+            srcDir "src/main/java"
         }
         kotlin {
-            srcDir 'src'
+            srcDir "src/main/kotlin"
         }
     }
 }
