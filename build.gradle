@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'kotlin'
 
-version = '1.0.2'
+version = '1.1.0'
 
 libsDirName = 'libs'
 
