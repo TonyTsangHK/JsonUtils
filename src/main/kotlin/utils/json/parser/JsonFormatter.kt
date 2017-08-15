@@ -2,6 +2,7 @@ package utils.json.parser
 
 import utils.json.core.*
 import utils.string.StringUtil
+import java.text.DecimalFormat
 
 import java.util.*
 
@@ -82,16 +83,22 @@ class JsonFormatter private constructor() {
     }
 
     fun numberToString(n: Number): String {
-        var s = n.toString()
-        if (s.indexOf('.') > 0 && s.indexOf('e') < 0 && s.indexOf('E') < 0) {
-            while (s.endsWith("0")) {
-                s = s.substring(0, s.length - 1)
+        if (n is Float || n is Double) {
+            val decimalFormat = DecimalFormat.getInstance()
+            decimalFormat.isGroupingUsed = false
+            if (n is Float) {
+                // around 7 decimal places for 32 bits single precision floating number
+                decimalFormat.maximumFractionDigits = 7
+            } else {
+                // around 16 decimal places for 64 bits double precision floating number
+                decimalFormat.maximumFractionDigits = 16
             }
-            if (s.endsWith(".")) {
-                s = s.substring(0, s.length - 1)
-            }
+            
+            return decimalFormat.format(n)
+        } else {
+            // use toString of BigInteger / BigDecimal
+            return n.toString()
         }
-        return s;
     }
 
     fun valueToStringWithoutJson(value: Any?): String {
