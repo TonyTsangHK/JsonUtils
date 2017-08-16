@@ -243,6 +243,8 @@ class JSONCompactStreamWriter: JSONStreamWriter {
             writeMap(o as Map<String, Any?>)
         } else if (o is List<*>) {
             writeList(o as List<Any?>)
+        } else if (o is ByteArray) {
+            writeBinary(o)
         } else {
             throw UnsupportedOperationException(
                 "Unsupported data type detected: ${o.javaClass.name}, toString: $o"
@@ -287,6 +289,8 @@ class JSONCompactStreamWriter: JSONStreamWriter {
             writeMap(o as Map<String, Any?>)
         } else if (o is List<*>) {
             writeList(o as List<Any?>)
+        } else if (o is ByteArray) {
+            writeBinary(o)
         } else {
             throw UnsupportedOperationException(
                 "Unsupported data type detected: ${o.javaClass.name}, toString: $o"

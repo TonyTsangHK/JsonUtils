@@ -286,7 +286,11 @@ class JSONCompactStreamReader: JSONStreamReader {
         try {
             when (id) {
                 JsonConstants.TYPE_NULL -> {
-                    return JSONObject.NULL
+                    if (jsonOutput) {
+                        return JSONObject.NULL
+                    } else {
+                        return null
+                    }
                 }
                 JsonConstants.TYPE_REF -> {
                     return readRef()
@@ -392,6 +396,9 @@ class JSONCompactStreamReader: JSONStreamReader {
                     } else {
                         return readMap()
                     }
+                }
+                JsonConstants.TYPE_BINARY -> {
+                    return readBinary()
                 }
                 else -> {
                     return null
