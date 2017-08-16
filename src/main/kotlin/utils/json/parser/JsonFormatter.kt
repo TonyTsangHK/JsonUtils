@@ -21,8 +21,9 @@ class JsonFormatter private constructor() {
             return _instance
         }
     }
-
-    val formatBinary = false
+    
+    // Not formatting binary data by default, since these data is usually very large is size
+    var formatBinary = false
     
     fun quote(string: String?): String {
         if (string == null || string.isEmpty()) {
@@ -179,6 +180,7 @@ class JsonFormatter private constructor() {
             if (formatBinary) {
                 return "\\hex\\" + StringUtil.getHexStringFromBytes(value)
             } else {
+                // parser unfriendly
                 return "[Binary data, length: ${value.size}]"
             }
         }
@@ -416,7 +418,7 @@ class JsonFormatter private constructor() {
             o = keyIter.next()
             builder.append(quote(o))
             builder.append(": ")
-            builder.append(valueToStringWithJson(json.get(o.toString()), indentFactor, indent))
+            builder.append(valueToStringWithJson(json.get(o), indentFactor, indent))
         } else {
             while (keyIter.hasNext()) {
                 o = keyIter.next();
@@ -467,10 +469,8 @@ class JsonFormatter private constructor() {
             if (i > 0) {
                 builder.append(",")
 
-                if (v is JSONObject || v is JSONArray) {
-                    builder.append('\n')
-                    newLined = true
-                }
+                builder.append('\n')
+                newLined = true
             }
 
             if (newLined) {
@@ -509,10 +509,8 @@ class JsonFormatter private constructor() {
                     if (i > 0) {
                         builder.append(",")
 
-                        if (v is JSONObject || v is JSONArray) {
-                            builder.append('\n')
-                            newLined = true
-                        }
+                        builder.append('\n')
+                        newLined = true
                     }
 
                     if (newLined) {
@@ -556,10 +554,8 @@ class JsonFormatter private constructor() {
             if (i > 0) {
                 builder.append(",")
 
-                if (v is JSONObject || v is JSONArray) {
-                    builder.append('\n')
-                    newLined = true
-                }
+                builder.append('\n')
+                newLined = true
             }
 
             if (newLined) {
