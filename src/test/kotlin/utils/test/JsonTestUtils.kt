@@ -138,12 +138,7 @@ object JsonTestUtils {
                             return VerifyResult.fail(getDataMismatchReason(sourceData, targetData))
                         }
                     } else if (sourceData is ByteArray && targetData is ByteArray) {
-                        if (targetData is ByteArray) {
-                            return verifyByteArray(sourceData, targetData)
-                        } else {
-                            // Type mismatch
-                            return VerifyResult.fail(getTypeMismatchReason(sourceData, targetData))
-                        }
+                        return verifyByteArray(sourceData, targetData)
                     } else if (sourceData is List<Any?> && targetData is List<Any?>) {
                         return verifyList(sourceData, targetData)
                     } else if (sourceData is Map<*, *> && targetData is Map<*, *>) {
@@ -170,14 +165,14 @@ object JsonTestUtils {
             for (i in sourceArray.indices) {
                 if (sourceArray[i] != targetArray[i]) {
                     // content byte mismatch
-                    return VerifyResult(false, "Content byte mismatch")
+                    return VerifyResult.fail("Content byte mismatch")
                 }
             }
             // all bytes matches
-            return VerifyResult(true)
+            return VerifyResult.PASSED
         } else {
             // byte array size mismatch
-            return VerifyResult(false, "Byte array size mismatch")
+            return VerifyResult.fail("Byte array size mismatch")
         }
     }
 }
