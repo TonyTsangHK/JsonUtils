@@ -1,6 +1,6 @@
 package utils.json
 
-class JsonStreamFormat(val base64: Boolean, val gzipped: Boolean, val storeType: StoreType) {
+class JsonStreamFormat(var base64: Boolean, var gzipped: Boolean, var storeType: StoreType) {
     // Auto getter for base64 / gzipped is getBase64/getGzipped
     // These function keep the same api as java implementation
     fun isBase64(): Boolean {
