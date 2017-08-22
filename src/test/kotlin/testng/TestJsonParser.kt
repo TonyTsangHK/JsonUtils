@@ -8,7 +8,6 @@ import org.testng.Assert.assertTrue
 import org.testng.Assert.fail
 import utils.test.JsonTestUtils
 import utils.test.TestData
-import utils.json.parser.JsonFormatter
 
 /**
  * Created with IntelliJ IDEA.

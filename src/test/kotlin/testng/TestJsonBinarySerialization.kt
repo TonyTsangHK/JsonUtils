@@ -8,6 +8,7 @@ import utils.test.TestData
 import utils.file.FileUtil
 import utils.json.serialize.JSONBinaryDeserializer
 import utils.json.serialize.JSONBinarySerializer
+import utils.json.serialize.JSONUniversalBinaryDeserializer
 import utils.json.serialize.compact.JSONCompactBinaryDeserializer
 import utils.json.serialize.compact.JSONCompactBinarySerializer
 
@@ -103,6 +104,49 @@ class TestJsonBinarySerialization {
             val listVerifyResult = JsonTestUtils.verifyList(testData.testList, deserializedList)
 
             assertTrue(listVerifyResult.pass, "Deserialized list (compact binary) verification failure, reason: ${listVerifyResult.reason}")
+        }
+    }
+    
+    @Test
+    fun testUniversalBinaryDeserialization() {
+        val deserializedBinaryMap = JSONUniversalBinaryDeserializer.getInstance().deserializeToMap(javaClass.getResourceAsStream("/mapBinaryJson.bson"))
+
+        if (deserializedBinaryMap == null) {
+            fail("Map binary deserialize (universal) failure!")
+        } else {
+            val mapVerifyResult = JsonTestUtils.verifyMap(testData.testMap, deserializedBinaryMap)
+
+            assertTrue(mapVerifyResult.pass, "Deserialized map (binary - universal) verification failure, reason: ${mapVerifyResult.reason}")
+        }
+
+        val deserializedBinaryList = JSONUniversalBinaryDeserializer.getInstance().deserializeToList(javaClass.getResourceAsStream("/listBinaryJson.bson"))
+
+        if (deserializedBinaryList == null) {
+            fail("List binary deserialize (universal) failure")
+        } else {
+            val listVerifyResult = JsonTestUtils.verifyList(testData.testList, deserializedBinaryList)
+
+            assertTrue(listVerifyResult.pass, "Deserialized list (binary - universal) verification failure, reason: ${listVerifyResult.reason}")
+        }
+        
+        val deserializedCompactMap = JSONUniversalBinaryDeserializer.getInstance().deserializeToMap(javaClass.getResourceAsStream("/mapCompactBinaryJson.bson"))
+
+        if (deserializedCompactMap == null) {
+            fail("Map compact binary deserialize (universal) failure!")
+        } else {
+            val mapVerifyResult = JsonTestUtils.verifyMap(testData.testMap, deserializedCompactMap)
+
+            assertTrue(mapVerifyResult.pass, "Deserialized map (compact binary - universal) verification failure, reason: ${mapVerifyResult.reason}")
+        }
+
+        val deserializedCompactList = JSONUniversalBinaryDeserializer.getInstance().deserializeToList(javaClass.getResourceAsStream("/listCompactBinaryJson.bson"))
+
+        if (deserializedCompactList == null) {
+            fail("List binary deserialize (universal) failure")
+        } else {
+            val listVerifyResult = JsonTestUtils.verifyList(testData.testList, deserializedCompactList)
+
+            assertTrue(listVerifyResult.pass, "Deserialized list (compact binary - universal) verification failure, reason: ${listVerifyResult.reason}")
         }
     }
 }
