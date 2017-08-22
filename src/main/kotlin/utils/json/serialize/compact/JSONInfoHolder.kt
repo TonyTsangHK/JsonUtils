@@ -20,21 +20,23 @@ import utils.data.SortedListAvl
  */
 class JSONInfoHolder {
     /**
-     * List of string datas
+     * List of string data
      */
     private val stringList: SortedList<String>
     /**
-     * List of BigInteger datas
+     * List of BigInteger data
      */
     private val bigIntegerList: SortedList<BigInteger>
     /**
-     * List of BigDecimal datas
+     * List of BigDecimal data
      */
     private val bigDecimalList: SortedList<BigDecimal>
     /**
-     * List of Date datas
+     * List of Date data
      */
     private val dateList: SortedList<Date>
+    
+    private val _indexMap = HashMap<Any?, Int>()
     
     /**
      * Construct a empty holder
@@ -51,7 +53,7 @@ class JSONInfoHolder {
      * 
      * @param json target json object
      */
-    public constructor(json: JSONObject): this() {
+    constructor(json: JSONObject): this() {
         extractInfos(json)
     }
     
@@ -62,7 +64,7 @@ class JSONInfoHolder {
      * 
      * @throws JSONException
      */
-    public constructor(jsonArray: JSONArray): this() {
+    constructor(jsonArray: JSONArray): this() {
         extractInfos(jsonArray)
     }
     
@@ -71,7 +73,7 @@ class JSONInfoHolder {
      * 
      * @param map target map
      */
-    public constructor(map: Map<String, Any?>): this() {
+    constructor(map: Map<String, Any?>): this() {
         extractInfos(map)
     }
     
@@ -80,7 +82,7 @@ class JSONInfoHolder {
      * 
      * @param list target list
      */
-    public constructor(list: List<Any?>): this() {
+    constructor(list: List<Any?>): this() {
         extractInfos(list)
     }
     
@@ -92,6 +94,8 @@ class JSONInfoHolder {
     protected fun addString(str: String) {
         if (!stringList.contains(str)) {
             stringList.add(str)
+            
+            invalidateIndexMap()
         }
     }
     
@@ -103,6 +107,8 @@ class JSONInfoHolder {
     protected fun addBigInteger(bigInteger: BigInteger) {
         if (!bigIntegerList.contains(bigInteger)) {
             bigIntegerList.add(bigInteger)
+
+            invalidateIndexMap()
         }
     }
     
@@ -114,6 +120,8 @@ class JSONInfoHolder {
     protected fun addBigDecimal(bigDecimal: BigDecimal) {
         if (!bigDecimalList.contains(bigDecimal)) {
             bigDecimalList.add(bigDecimal)
+
+            invalidateIndexMap()
         }
     }
     
@@ -125,11 +133,13 @@ class JSONInfoHolder {
     protected fun addDate(date: Date) {
         if (!dateList.contains(date)) {
             dateList.add(date)
+
+            invalidateIndexMap()
         }
     }
     
     /**
-     * Add an object if it is an instanceof String/BigInteger/BigDecimal/Date & not contained already
+     * Add an object if it is an instance of String/BigInteger/BigDecimal/Date & not contained already
      * 
      * @param obj object value
      */
@@ -146,7 +156,7 @@ class JSONInfoHolder {
     }
     
     /**
-     * Extract intermediate datas from specified JSONObject
+     * Extract intermediate data from specified JSONObject
      * 
      * @param json target json object
      * 
@@ -169,7 +179,7 @@ class JSONInfoHolder {
     }
     
     /**
-     * Extract intermediate datas from specified Map
+     * Extract intermediate data from specified Map
      * 
      * @param map target map
      */
@@ -191,7 +201,7 @@ class JSONInfoHolder {
     }
     
     /**
-     * Extract intermediate datas from specified JSONArray
+     * Extract intermediate data from specified JSONArray
      * 
      * @param jsonArray target json array
      * 
@@ -212,7 +222,7 @@ class JSONInfoHolder {
     }
     
     /**
-     * Extract intermediate datas from specified List
+     * Extract intermediate data from specified List
      * 
      * @param list target list
      */
@@ -261,36 +271,36 @@ class JSONInfoHolder {
     }
     
     /**
-     * Get the size of string datas
+     * Get the size of string data
      * 
-     * @return size of string datas
+     * @return size of string data
      */
     public fun stringSize(): Int {
         return stringList.size
     }
     
     /**
-     * Get the size of BigInteger datas
+     * Get the size of BigInteger data
      * 
-     * @return size of BigInteger datas
+     * @return size of BigInteger data
      */
     public fun bigIntegerSize(): Int {
         return bigIntegerList.size
     }
     
     /**
-     * Get the size of BigDecimal datas
+     * Get the size of BigDecimal data
      * 
-     * @return size of BigDecimal datas
+     * @return size of BigDecimal data
      */
     public fun bigDecimalSize(): Int {
         return bigDecimalList.size
     }
     
     /**
-     * Get the size of Date datas
+     * Get the size of Date data
      * 
-     * @return size of date datas
+     * @return size of date data
      */
     public fun dateSize(): Int {
         return dateList.size
@@ -373,15 +383,11 @@ class JSONInfoHolder {
         }
         return null
     }
-    
+
     /**
-     * Get the index of the specified object
-     * 
-     * @param obj target object
-     * 
-     * @return index of the specified object
+     * Search for index from content data lists
      */
-    public fun indexOf(obj: Any?): Int {
+    private fun rawIndexOf(obj: Any?): Int {
         if (obj == null) {
             return -1
         } else if (obj is String) {
@@ -394,6 +400,71 @@ class JSONInfoHolder {
             return stringList.size + bigIntegerList.size + bigDecimalList.size + dateList.indexOf(obj)
         } else {
             return -1
+        }
+    }
+    
+    /**
+     * Get the index of the specified object
+     * 
+     * @param obj target object
+     * 
+     * @return index of the specified object
+     */
+    fun indexOf(obj: Any?): Int {
+        if (_indexMap.isEmpty() && size() > 0) {
+            buildCacheIndexMap()
+        }
+        
+        if (_indexMap.isEmpty()) {
+            // Possible, buildCacheIndexMap failed?
+            return rawIndexOf(obj)
+        } else {
+            if (_indexMap.contains(obj)) {
+                return _indexMap[obj]!!
+            } else {
+                return -1
+            }
+        }
+    }
+
+    /**
+     * Build cached indexMap
+     * 
+     */
+    private fun buildCacheIndexMap() {
+        var c = 0
+        
+        val stringIter = stringList.iterator()
+        
+        while (stringIter.hasNext()) {
+            _indexMap[stringIter.next()] = c++
+        }
+        
+        val bigIntegerIter = bigIntegerList.iterator()
+        
+        while (bigIntegerIter.hasNext()) {
+            _indexMap[bigIntegerIter.next()] = c++
+        }
+        
+        val bigDecimalIter = bigDecimalList.iterator()
+        
+        while (bigDecimalIter.hasNext()) {
+            _indexMap[bigDecimalIter.next()] = c++
+        }
+        
+        val dateIter = dateList.iterator()
+        
+        while (dateIter.hasNext()) {
+            _indexMap[dateIter.next()] = c++
+        }
+    }
+
+    /**
+     * Invalidate indexMap, internal use only, should be called whenever adding / removing object
+     */
+    private fun invalidateIndexMap() {
+        if (_indexMap.isNotEmpty()) {
+            _indexMap.clear()
         }
     }
 }
