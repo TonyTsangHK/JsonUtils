@@ -107,6 +107,25 @@ interface JSONSerializer {
     fun serialize(map: Map<String, Any?>, output: OutputStream, flushWhenFinished: Boolean)
 
     /**
+     * Serialize a map object to the specified output stream
+     * 
+     * @param mapObject map object
+     * @param output output stream
+     */
+    @Throws(IOException::class)
+    fun serialize(mapObject: Any, output: OutputStream)
+
+    /**
+     * Serialize a MapObject to the specified output stream
+     * 
+     * @param mapObject map object
+     * @param output output stream
+     * @param flushWhenFinished whether to flush when finished
+     */
+    @Throws(IOException::class)
+    fun serialize(mapObject: Any, output: OutputStream, flushWhenFinished: Boolean)
+
+    /**
      * Serialize a JSONObject to bytes.
      *
      * @param json target json object
@@ -149,4 +168,11 @@ interface JSONSerializer {
      */
     @Throws(IOException::class)
     fun serializeToBytes(list: List<Any?>): ByteArray
+
+    /**
+     * Serialize a MapObject to bytes
+     * 
+     * @param mapObject map object
+     */
+    fun serializeToBytes(mapObject: Any): ByteArray
 }

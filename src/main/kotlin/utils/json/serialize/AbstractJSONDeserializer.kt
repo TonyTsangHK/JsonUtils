@@ -1,10 +1,12 @@
 package utils.json.serialize
 
+import utils.data.MapObjectHelper
 import utils.json.core.JSONArray
 import utils.json.core.JSONObject
 
 import java.io.ByteArrayInputStream
 import java.io.IOException
+import java.io.InputStream
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,5 +33,45 @@ abstract class AbstractJSONDeserializer: JSONDeserializer {
     @Throws(IOException::class)
     override fun deserializeToList(bytes: ByteArray): List<Any?>? {
         return deserializeToList(ByteArrayInputStream(bytes))
+    }
+
+    override fun deserializeToMapObject(input: InputStream): Any {
+        val map = deserializeToMap(input)
+        
+        if (map != null) {
+            return MapObjectHelper.fromMap(map)
+        } else {
+            throw IllegalArgumentException("Malformed MapObject")
+        }
+    }
+
+    override fun <T> deserializeToMapObject(input: InputStream, clz: Class<T>): T {
+        val map = deserializeToMap(input)
+        
+        if (map != null) {
+            return MapObjectHelper.fromMap(map, clz)
+        } else {
+            throw IllegalArgumentException("Malformed MapObject")
+        }
+    }
+
+    override fun deserializeToMapObject(bytes: ByteArray): Any {
+        val map = deserializeToMap(bytes)
+        
+        if (map != null) {
+            return MapObjectHelper.fromMap(map)
+        } else {
+            throw IllegalArgumentException("Malformed MapObject")
+        }
+    }
+
+    override fun <T> deserializeToMapObject(bytes: ByteArray, clz: Class<T>): T {
+        val map = deserializeToMap(bytes)
+        
+        if (map != null) {
+            return MapObjectHelper.fromMap(map, clz)
+        } else {
+            throw IllegalArgumentException("Malformed MapObject")
+        }
     }
 }

@@ -60,6 +60,25 @@ interface JSONDeserializer {
      */
     @Throws(IOException::class)
     fun deserializeToMap(input: InputStream): Map<String, Any?>?
+
+    /**
+     * Deserialize MapObject from data input stream
+     * MapObject serialized without class info may fail the process, resulted in IllegalArgumentException
+     *
+     * @param input data input stream
+     * @return MapObject
+     */
+    @Throws(IOException::class)
+    fun deserializeToMapObject(input: InputStream): Any
+
+    /**
+     * Deserialize MapObject from data input stream with class info provided
+     *
+     * @param input data input stream
+     * @return MapObject
+     */
+    @Throws(IOException::class)
+    fun <T> deserializeToMapObject(input: InputStream, clz: Class<T>): T
     
     /**
      * Deserialize JSONObject from the specified bytes.
@@ -94,6 +113,25 @@ interface JSONDeserializer {
     @Throws(IOException::class)
     fun deserializeToMap(bytes: ByteArray): Map<String, Any?>?
 
+    /**
+     * Deserialize bytes to MapObject
+     * MapObject serialized without class info may fail the process, resulted in IllegalArgumentException 
+     * 
+     * @param bytes encoded bytes
+     * @return MapObject 
+     */
+    @Throws(IOException::class)
+    fun deserializeToMapObject(bytes: ByteArray): Any
+
+    /**
+     * Deserialize bytes to MapObject with class info provided
+     * 
+     * @param bytes encoded bytes
+     * @return MapObject
+     */
+    @Throws(IOException::class)
+    fun <T> deserializeToMapObject(bytes: ByteArray, clz: Class<T>): T
+    
     /**
      * Deserialize a list (same as JSONArray) from the specified bytes
      *
