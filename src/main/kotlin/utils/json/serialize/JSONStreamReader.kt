@@ -24,15 +24,12 @@ open class JSONStreamReader(var input: InputStream) {
     companion object {
         @JvmStatic
         @Throws(IOException::class)
-        fun readInt(input: InputStream, byteCount: Int): Int {
-            return SerializeUtils.byteArrayToInt(SerializeUtils.readStream(input, byteCount))
-        }
+        fun readInt(input: InputStream, byteCount: Int): Int = SerializeUtils.byteArrayToInt(SerializeUtils.readStream(input, byteCount))
+        
 
         @JvmStatic
         @Throws(IOException::class)
-        fun readLong(input: InputStream, byteCount: Int): Long {
-            return SerializeUtils.byteArrayToLong(SerializeUtils.readStream(input, byteCount))
-        }
+        fun readLong(input: InputStream, byteCount: Int): Long = SerializeUtils.byteArrayToLong(SerializeUtils.readStream(input, byteCount))
 
         @JvmStatic
         @Throws(IOException::class)
@@ -85,20 +82,14 @@ open class JSONStreamReader(var input: InputStream) {
 
         @JvmStatic
         @Throws(IOException::class)
-        fun readFloat(input: InputStream): Float {
-            return SerializeUtils.byteArrayToFloat(SerializeUtils.readStream(input, 4))
-        }
+        fun readFloat(input: InputStream): Float = SerializeUtils.byteArrayToFloat(SerializeUtils.readStream(input, 4))
 
         @Throws(IOException::class)
-        fun readDouble(input: InputStream): Double {
-            return SerializeUtils.byteArrayToDouble(SerializeUtils.readStream(input, 8))
-        }
+        fun readDouble(input: InputStream): Double = SerializeUtils.byteArrayToDouble(SerializeUtils.readStream(input, 8))
 
         @JvmStatic
         @Throws(IOException::class)
-        fun readDate(input: InputStream): Date {
-            return Date(SerializeUtils.byteArrayToLong(SerializeUtils.readStream(input, 8)))
-        }
+        fun readDate(input: InputStream): Date = Date(SerializeUtils.byteArrayToLong(SerializeUtils.readStream(input, 8)))
 
         @JvmStatic
         @Throws(IOException::class)
@@ -135,7 +126,7 @@ open class JSONStreamReader(var input: InputStream) {
                 return jsonArray
             }
 
-            for (i in 0 .. memberCount-1) {
+            for (i in 0 until memberCount) {
                 val v = readValueFromStream(input, true)
 
                 jsonArray.put(v)
@@ -155,7 +146,7 @@ open class JSONStreamReader(var input: InputStream) {
                 return list
             }
 
-            for (i in 0 .. memberCount-1) {
+            for (i in 0 until memberCount) {
                 list.add(readValueFromStream(input, false))
             }
 
@@ -172,7 +163,7 @@ open class JSONStreamReader(var input: InputStream) {
                 return json
             }
 
-            for (i in 0 .. memberCount - 1) {
+            for (i in 0 until memberCount) {
                 val k = readString(input)
                 val v = readValueFromStream(input, true)
 
@@ -193,7 +184,7 @@ open class JSONStreamReader(var input: InputStream) {
                 return map
             }
 
-            for (i in 0 .. memberCount-1) {
+            for (i in 0 until memberCount) {
                 val k = readString(input)
                 val v = readValueFromStream(input, false)
 
@@ -341,9 +332,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun read(): Int {
-        return input.read()
-    }
+    open fun read(): Int = input.read()
     
     /**
      * Read bytes and fill the data to the specified byte array, use it with caution.
@@ -355,9 +344,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readStream(bytes: ByteArray): Int {
-        return SerializeUtils.readStream(input, bytes)
-    }
+    open fun readStream(bytes: ByteArray): Int = SerializeUtils.readStream(input, bytes)
     
     /**
      * Read bytes up to the specified length
@@ -369,9 +356,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readStream(length: Int): ByteArray {
-        return SerializeUtils.readStream(input, length)
-    }
+    open fun readStream(length: Int): ByteArray = SerializeUtils.readStream(input, length)
     
     /**
      * Read length data (not the available length of the input stream but Binary JSON length data)
@@ -381,9 +366,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readLength(): Int {
-        return readLength(input)
-    }
+    open fun readLength(): Int = readLength(input)
     
     /**
      * Read an integer value
@@ -394,9 +377,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readInt(byteCount: Int): Int {
-        return readInt(input, byteCount)
-    }
+    open fun readInt(byteCount: Int): Int = readInt(input, byteCount)
     
     /**
      * Read an integer value, byte count will be determined by type byte, non integer type will raise IOException
@@ -451,9 +432,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readIntOrLong(byteCount: Int): Any {
-        return readIntOrLong(input, byteCount)
-    }
+    open fun readIntOrLong(byteCount: Int): Any = readIntOrLong(input, byteCount)
     
     /**
      * Read an integer / long value, type will be determined by type byte and actual decoded value
@@ -544,9 +523,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readLong(byteCount: Int): Long {
-        return readLong(input, byteCount)
-    }
+    open fun readLong(byteCount: Int): Long = readLong(input, byteCount)
     
     /**
      * Read a single floating point value
@@ -556,9 +533,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readFloat(): Float {
-        return readFloat(input)
-    }
+    open fun readFloat(): Float = readFloat(input)
     
     /**
      * Read a double floating point value
@@ -568,9 +543,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readDouble(): Double{
-        return readDouble(input)
-    }
+    open fun readDouble(): Double = readDouble(input)
     
     /**
      * Read a date value
@@ -580,9 +553,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readDate(): Date {
-        return readDate(input)
-    }
+    open fun readDate(): Date = readDate(input)
     
     /**
      * Read a BigInteger value
@@ -592,9 +563,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readBigInteger(): BigInteger {
-        return readBigInteger(input)
-    }
+    open fun readBigInteger(): BigInteger = readBigInteger(input)
     
     /**
      * Read BigDecimal value
@@ -604,9 +573,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readBigDecimal(): BigDecimal {
-        return readBigDecimal(input)
-    }
+    open fun readBigDecimal(): BigDecimal = readBigDecimal(input)
     
     /**
      * Read a string
@@ -616,9 +583,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readString(): String {
-        return readString(input)
-    }
+    open fun readString(): String = readString(input)
 
     /**
      * Read binary data
@@ -628,9 +593,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readBinary(): ByteArray {
-        return readBinary(input)
-    }
+    open fun readBinary(): ByteArray = readBinary(input)
     
     /**
      * Read a JSONObject
@@ -641,9 +604,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readObject(): JSONObject {
-        return readObject(input)
-    }
+    open fun readObject(): JSONObject = readObject(input)
     
     /**
      * Read a map
@@ -653,9 +614,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readMap(): Map<String, Any?>? {
-        return readMap(input)
-    }
+    open fun readMap(): Map<String, Any?>? = readMap(input)
     
     /**
      * Read a JSONArray
@@ -666,9 +625,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readArray(): JSONArray {
-        return readArray(input)
-    }
+    open fun readArray(): JSONArray = readArray(input)
     
     /**
      * Read a list
@@ -678,9 +635,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readList(): List<Any?>? {
-        return readList(input)
-    }
+    open fun readList(): List<Any?>? = readList(input)
     
     /**
      * Read a value from the underlying stream, type will be determined by type bytes
@@ -691,9 +646,7 @@ open class JSONStreamReader(var input: InputStream) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    open fun readValueFromStream(jsonOutput: Boolean): Any? {
-        return readValueFromStream(input, jsonOutput)
-    }
+    open fun readValueFromStream(jsonOutput: Boolean): Any? = readValueFromStream(input, jsonOutput)
     
     /**
      * Check the header of the underlying stream

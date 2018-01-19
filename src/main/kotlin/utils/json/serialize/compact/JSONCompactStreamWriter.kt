@@ -68,7 +68,7 @@ class JSONCompactStreamWriter: JSONStreamWriter {
             writeToStream(JsonConstants.TYPE_STRING.toInt())
             writeLength(jsonInfoHolder.stringSize())
             
-            for (i in 0 .. jsonInfoHolder.stringSize() - 1) {
+            for (i in 0 until jsonInfoHolder.stringSize()) {
                 writeStringImpl(jsonInfoHolder.getString(i)!!)
             }
         }
@@ -77,7 +77,7 @@ class JSONCompactStreamWriter: JSONStreamWriter {
             writeToStream(JsonConstants.TYPE_BIGINTEGER.toInt())
             writeLength(jsonInfoHolder.bigIntegerSize())
             
-            for (i in 0 .. jsonInfoHolder.bigIntegerSize() - 1) {
+            for (i in 0 until jsonInfoHolder.bigIntegerSize()) {
                 writeBigIntegerImpl(jsonInfoHolder.getBigInteger(i)!!)
             }
         }
@@ -85,7 +85,7 @@ class JSONCompactStreamWriter: JSONStreamWriter {
             writeToStream(JsonConstants.TYPE_BIGDECIMAL.toInt())
             writeLength(jsonInfoHolder.bigDecimalSize())
             
-            for (i in 0 .. jsonInfoHolder.bigDecimalSize() - 1) {
+            for (i in 0 until jsonInfoHolder.bigDecimalSize()) {
                 writeBigDecimalImpl(jsonInfoHolder.getBigDecimal(i)!!)
             }
         }
@@ -93,7 +93,7 @@ class JSONCompactStreamWriter: JSONStreamWriter {
             writeToStream(JsonConstants.TYPE_DATE.toInt())
             writeLength(jsonInfoHolder.dateSize())
             
-            for (i in 0 .. jsonInfoHolder.dateSize() - 1) {
+            for (i in 0 until jsonInfoHolder.dateSize()) {
                 writeToStream(SerializeUtils.longToByteArrayStrict(jsonInfoHolder.getDate(i)!!.time))
             }
         }
@@ -155,7 +155,7 @@ class JSONCompactStreamWriter: JSONStreamWriter {
         
         writeLength(jsonArray.length())
         
-        for (i in 0 .. jsonArray.length() - 1) {
+        for (i in 0 until jsonArray.length()) {
             write(jsonArray.get(i))
         }
     }

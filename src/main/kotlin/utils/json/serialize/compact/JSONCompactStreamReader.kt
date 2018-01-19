@@ -66,7 +66,7 @@ class JSONCompactStreamReader: JSONStreamReader {
             return json
         }
         
-        for (i in 0 .. memberCount-1) {
+        for (i in 0 until memberCount) {
             val k = readRef().toString()
             val v = readValueFromStream(true)
             
@@ -93,7 +93,7 @@ class JSONCompactStreamReader: JSONStreamReader {
             return map
         }
         
-        for (i in 0 .. memberCount - 1) {
+        for (i in 0 until memberCount) {
             val k = readRef().toString()
             val v = readValueFromStream(false)
             
@@ -120,7 +120,7 @@ class JSONCompactStreamReader: JSONStreamReader {
         } else {
             val array = JSONArray()
             
-            for (i in 0 .. memberCount - 1) {
+            for (i in 0 until memberCount) {
                 val v = readValueFromStream(true)
 
                 array.put(v)
@@ -142,11 +142,11 @@ class JSONCompactStreamReader: JSONStreamReader {
         val memberCount = readLength()
         
         if (memberCount == 0) {
-            return ArrayList<Any?>()
+            return ArrayList()
         } else {
             val list = ArrayList<Any?>(memberCount)
 
-            for (i in 0 .. memberCount - 1) {
+            for (i in 0 until memberCount) {
                 val v = readValueFromStream(false)
                 
                 list.add(v)
@@ -182,10 +182,10 @@ class JSONCompactStreamReader: JSONStreamReader {
      */
     @Throws(IOException::class)
     private fun initialize(skipTypeCheck: Boolean) {
-        stringList = ArrayList<String>()
-        bigIntegerList = ArrayList<BigInteger>()
-        bigDecimalList = ArrayList<BigDecimal>()
-        dateList = ArrayList<Date>()
+        stringList = ArrayList()
+        bigIntegerList = ArrayList()
+        bigDecimalList = ArrayList()
+        dateList = ArrayList()
         
         if (!skipTypeCheck && !typeCheck()) {
             return
@@ -193,24 +193,24 @@ class JSONCompactStreamReader: JSONStreamReader {
         
         val len = read()
         
-        for (i in 0 .. len-1) {
+        for (i in 0 until len) {
             val type = read()
             val typeLength = readLength()
             
             if (type == JsonConstants.TYPE_STRING.toInt()) {
-                for (j in 0 .. typeLength - 1) {
+                for (j in 0 until typeLength) {
                     stringList.add(readString())
                 }
             } else if (type == JsonConstants.TYPE_BIGINTEGER.toInt()) {
-                for (j in 0 .. typeLength - 1) {
+                for (j in 0 until typeLength) {
                     bigIntegerList.add(readBigInteger())
                 }
             } else if (type == JsonConstants.TYPE_BIGDECIMAL.toInt()) {
-                for (j in 0 .. typeLength - 1) {
+                for (j in 0 until typeLength) {
                     bigDecimalList.add(readBigDecimal())
                 }
             } else if (type == JsonConstants.TYPE_DATE.toInt()) {
-                for (j in 0 .. typeLength - 1) {
+                for (j in 0 until typeLength) {
                     dateList.add(readDate())
                 }
             }

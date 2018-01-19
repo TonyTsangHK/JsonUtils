@@ -422,7 +422,13 @@ class JSONInfoHolder {
             if (_indexMap.contains(obj)) {
                 return _indexMap[obj]!!
             } else {
-                return -1
+                // BigDecimal with different scale may be missing from cached index map, try with rawIndexOf
+                val indexFromRaw = rawIndexOf(obj)
+                if (indexFromRaw != -1) {
+                    // index found, add it to cached map
+                    _indexMap[obj] = indexFromRaw
+                }
+                return indexFromRaw
             }
         }
     }

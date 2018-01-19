@@ -321,7 +321,7 @@ open class JSONStreamWriter(var output: OutputStream) {
         
         writeLength(jsonArray.length())
         
-        for (i in 0 .. jsonArray.length() - 1) {
+        for (i in 0 until jsonArray.length()) {
             write(jsonArray.get(i))
         }
     }
