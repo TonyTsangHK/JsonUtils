@@ -61,8 +61,9 @@ class JSONCompactStreamReader: JSONStreamReader {
     override fun readObject(): JSONObject {
         val json = JSONObject()
         val memberCount = readLength()
-        
-        if (memberCount == 0) {
+
+        // Return empty map for empty input stream, considering returning null for negative length (empty stream or invalid stream data format)
+        if (memberCount <= 0) {
             return json
         }
         
@@ -88,8 +89,9 @@ class JSONCompactStreamReader: JSONStreamReader {
         val map = HashMap<String, Any?>()
         
         val memberCount = readLength()
-        
-        if (memberCount == 0) {
+
+        // Return empty map for empty input stream, considering returning null for negative length (empty stream or invalid stream data format)
+        if (memberCount <= 0) {
             return map
         }
         
@@ -114,8 +116,9 @@ class JSONCompactStreamReader: JSONStreamReader {
     @Throws(IOException::class)
     override fun readArray(): JSONArray {
         val memberCount = readLength()
-        
-        if (memberCount == 0) {
+
+        // Return empty map for empty input stream, considering returning null for negative length (empty stream or invalid stream data format)
+        if (memberCount <= 0) {
             return JSONArray()
         } else {
             val array = JSONArray()
@@ -140,8 +143,9 @@ class JSONCompactStreamReader: JSONStreamReader {
     @Throws(IOException::class)
     override fun readList(): List<Any?> {
         val memberCount = readLength()
-        
-        if (memberCount == 0) {
+
+        // Return empty map for empty input stream, considering returning null for negative length (empty stream or invalid stream data format)
+        if (memberCount <= 0) {
             return ArrayList()
         } else {
             val list = ArrayList<Any?>(memberCount)

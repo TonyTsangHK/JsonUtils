@@ -95,7 +95,7 @@ open class JSONStreamReader(var input: InputStream) {
         @Throws(IOException::class)
         fun readString(input: InputStream): String {
             val len = readLength(input)
-
+            
             if (len == 0) {
                 return ""
             }
@@ -122,7 +122,8 @@ open class JSONStreamReader(var input: InputStream) {
 
             val memberCount = readLength(input)
 
-            if (memberCount == 0) {
+            // Return empty map for empty input stream, considering returning null for negative length (empty stream or invalid stream data format)
+            if (memberCount <= 0) {
                 return jsonArray
             }
 
@@ -142,7 +143,8 @@ open class JSONStreamReader(var input: InputStream) {
 
             val memberCount = readLength(input)
 
-            if (memberCount == 0) {
+            // Return empty map for empty input stream, considering returning null for negative length (empty stream or invalid stream data format)
+            if (memberCount <= 0) {
                 return list
             }
 
@@ -159,7 +161,8 @@ open class JSONStreamReader(var input: InputStream) {
             val json = JSONObject()
             val memberCount = readLength(input)
 
-            if (memberCount == 0) {
+            // Return empty map for empty input stream, considering returning null for negative length (empty stream or invalid stream data format)
+            if (memberCount <= 0) {
                 return json
             }
 
@@ -180,7 +183,8 @@ open class JSONStreamReader(var input: InputStream) {
 
             val memberCount = readLength(input)
 
-            if (memberCount == 0) {
+            // Return empty map for empty input stream, considering returning null for negative length (empty stream or invalid stream data format)
+            if (memberCount <= 0) {
                 return map
             }
 
