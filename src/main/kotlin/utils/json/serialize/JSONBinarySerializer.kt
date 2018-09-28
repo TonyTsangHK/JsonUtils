@@ -11,11 +11,10 @@ package utils.json.serialize
  * Implementation details are defined below, actually I am not following the specification ... sorry
  */
 
-import java.io.IOException
-import java.io.OutputStream
-
 import utils.json.core.JSONArray
 import utils.json.core.JSONObject
+import java.io.IOException
+import java.io.OutputStream
 
 /**
  * Serialize JSON into binary format

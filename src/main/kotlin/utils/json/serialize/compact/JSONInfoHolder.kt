@@ -1,14 +1,18 @@
 package utils.json.serialize.compact
 
+import utils.data.SortedList
+import utils.data.SortedListAvl
+import utils.json.core.JSONArray
+import utils.json.core.JSONObject
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.Date
-
-import utils.json.core.JSONArray
-import utils.json.core.JSONObject
-
-import utils.data.SortedList
-import utils.data.SortedListAvl
+import kotlin.collections.HashMap
+import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.contains
+import kotlin.collections.isNotEmpty
+import kotlin.collections.set
 
 /**
  * JSON intermediate data holder

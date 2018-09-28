@@ -1,5 +1,10 @@
 package utils.json.serialize.compact
 
+import utils.json.core.JSONArray
+import utils.json.core.JSONException
+import utils.json.core.JSONObject
+import utils.json.serialize.JSONStreamReader
+import utils.json.serialize.JsonConstants
 import java.io.IOException
 import java.io.InputStream
 import java.math.BigDecimal
@@ -7,13 +12,6 @@ import java.math.BigInteger
 import java.util.ArrayList
 import java.util.Date
 import java.util.HashMap
-
-import utils.json.core.JSONArray
-import utils.json.core.JSONException
-import utils.json.core.JSONObject
-
-import utils.json.serialize.JSONStreamReader
-import utils.json.serialize.JsonConstants
 
 /**
  * Compact binary JSON stream reader

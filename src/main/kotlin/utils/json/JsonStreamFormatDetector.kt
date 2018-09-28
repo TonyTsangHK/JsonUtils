@@ -1,14 +1,13 @@
 package utils.json
 
+import utils.base64.Base64Convertor
+import utils.base64.Base64InputStream
+import utils.json.serialize.JsonConstants
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
 import java.util.zip.GZIPInputStream
-
-import utils.base64.Base64Convertor
-import utils.base64.Base64InputStream
-import utils.json.serialize.JsonConstants
 
 object JsonStreamFormatDetector {
     @JvmField

@@ -1,10 +1,9 @@
 package utils.json.serialize
 
-import java.io.IOException
-import java.io.InputStream
-
 import utils.json.core.JSONArray
 import utils.json.core.JSONObject
+import java.io.IOException
+import java.io.InputStream
 
 /**
  * JSON deserializer interface

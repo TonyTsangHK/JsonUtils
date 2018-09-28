@@ -3,14 +3,14 @@ package testng
 import org.testng.Assert.assertTrue
 import org.testng.Assert.fail
 import org.testng.annotations.Test
-import utils.test.JsonTestUtils
-import utils.test.TestData
 import utils.file.FileUtil
 import utils.json.serialize.JSONBinaryDeserializer
 import utils.json.serialize.JSONBinarySerializer
 import utils.json.serialize.JSONUniversalBinaryDeserializer
 import utils.json.serialize.compact.JSONCompactBinaryDeserializer
 import utils.json.serialize.compact.JSONCompactBinarySerializer
+import utils.test.JsonTestUtils
+import utils.test.TestData
 
 /**
  * Created with IntelliJ IDEA.

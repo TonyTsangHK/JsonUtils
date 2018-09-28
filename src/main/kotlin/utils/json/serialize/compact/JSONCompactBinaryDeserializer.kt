@@ -1,13 +1,11 @@
 package utils.json.serialize.compact
 
-import java.io.IOException
-import java.io.InputStream
-
 import utils.json.core.JSONArray
 import utils.json.core.JSONObject
-
 import utils.json.serialize.AbstractJSONDeserializer
 import utils.json.serialize.JsonConstants
+import java.io.IOException
+import java.io.InputStream
 
 /**
  * Deserialize compact binary JSON stream into JSON object

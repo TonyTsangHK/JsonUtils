@@ -1,18 +1,16 @@
 package utils.json.serialize.compact
 
+import utils.json.core.JSONArray
+import utils.json.core.JSONException
+import utils.json.core.JSONObject
+import utils.json.serialize.JSONStreamWriter
+import utils.json.serialize.JsonConstants
+import utils.stream.SerializeUtils
 import java.io.IOException
 import java.io.OutputStream
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.Date
-
-import utils.json.core.JSONArray
-import utils.json.core.JSONException
-import utils.json.core.JSONObject
-
-import utils.json.serialize.JSONStreamWriter
-import utils.json.serialize.JsonConstants
-import utils.stream.SerializeUtils
 
 /**
  * Compact binary JSON stream writer

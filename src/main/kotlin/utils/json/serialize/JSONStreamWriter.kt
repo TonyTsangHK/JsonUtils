@@ -1,15 +1,14 @@
 package utils.json.serialize
 
+import utils.json.core.JSONArray
+import utils.json.core.JSONObject
+import utils.stream.SerializeUtils
 import java.io.IOException
 import java.io.OutputStream
 import java.math.BigDecimal
 import java.math.BigInteger
-import java.util.*
-
-import utils.json.core.JSONArray
-import utils.json.core.JSONObject
-import utils.stream.SerializeUtils
 import java.nio.charset.Charset
+import java.util.*
 
 /**
  * JSONStreamWriter handles all the writing process during serialization.

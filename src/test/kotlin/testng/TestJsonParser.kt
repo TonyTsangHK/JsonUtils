@@ -1,11 +1,10 @@
 package testng
 
+import org.testng.Assert.assertTrue
+import org.testng.Assert.fail
 import org.testng.annotations.Test
 import utils.file.FileUtil
 import utils.json.parser.JsonParser
-
-import org.testng.Assert.assertTrue
-import org.testng.Assert.fail
 import utils.test.JsonTestUtils
 import utils.test.TestData
 

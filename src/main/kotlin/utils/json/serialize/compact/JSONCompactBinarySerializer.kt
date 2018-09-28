@@ -1,12 +1,10 @@
 package utils.json.serialize.compact
 
-import java.io.IOException
-import java.io.OutputStream
-
 import utils.json.core.JSONArray
 import utils.json.core.JSONObject
-
 import utils.json.serialize.AbstractJSONSerializer
+import java.io.IOException
+import java.io.OutputStream
 
 /**
  * Serialize JSON into compact binary format

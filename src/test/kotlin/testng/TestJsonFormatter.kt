@@ -1,13 +1,11 @@
 package testng
 
+import org.testng.Assert.assertEquals
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
-
-import org.testng.Assert.assertEquals
-import utils.test.TestData
 import utils.file.FileUtil
-
 import utils.json.parser.JsonFormatter
+import utils.test.TestData
 
 /**
  * Created with IntelliJ IDEA.
